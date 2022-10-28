@@ -10,6 +10,8 @@ The program is first mentioned in Cabello, C. - PhD Thesis 2023, and Cabello et 
 Maintainer: Cristina Cabello, criscabe@ucm.es Webpage (source): https://github.com/criscabe/MEGARA
 
 
+
+
 <p align="center">
-<img src="images/MEGARA_pic.png" width="90%"></a>
+<img src="images/MEGARA_pic.png" width="80%"></a>
 </p>
