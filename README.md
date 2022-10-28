@@ -8,6 +8,7 @@ This software was created by C. Cabello as part of her thesis work, developed un
 The program is first mentioned in Cabello, C. - PhD Thesis 2023, and Cabello et al. 2023 in prep.
 
 Maintainer: Cristina Cabello, criscabe@ucm.es 
+
 Webpage (source): https://github.com/criscabe/MEGARA
 
 <br/><br/>
