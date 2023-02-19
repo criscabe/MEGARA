@@ -120,4 +120,3 @@ if __name__ == "__main__":
         os.system('python N/visualization_v2.py results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_UM461_STD_SIMULATIONS.fits -c 19  --min-cut 0.00000 --max-cut 2 --title STD_' + str(name) + '_sigma_corrected --label "km/s"  --wcs-grid')
         os.system('mv visualization_map.pdf results_SIMUL/LINES/' + str(name) + '/plots_std/' + str(name) + '_UM461_STD_SIMULATIONS_sigma_corrected.pdf')
 
-
