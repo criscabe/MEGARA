@@ -56,6 +56,16 @@ $ python 2_lines_analysis.py --OIII5007 --Hbeta --analyze --plots
 ```
 
 
-**3_residuals.py**: Compute the median of simulations and residuals
+**3_residuals.py**: This file software has been employed to compute both the median value of different parameters derived from the simulated MEGARA data, and the residuals (real data - median of the simulations).
 
-**4_uncertainties.py**: Compute the uncertainties of different parameters
+In this case, the user should just specify the emission line of interest (e.g., [OIII]5007):
+```bash
+$ python 3_residuals.py --OIII5007 
+```
+
+**4_uncertainties.py**: This file software has been employed to compute the uncertainties of different parameters derived from the simulated MEGARA data.
+
+In this case, the user should just specify the emission line of interest (e.g., [OIII]5007):
+```bash
+$ python 4_uncertainties.py --OIII5007 
+```
