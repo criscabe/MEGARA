@@ -387,8 +387,6 @@ if __name__ == "__main__":
                 os.system('mv visualization_map.pdf results_SIMUL/LINES/' + str(name) + '/plots/' + str(name) + '_sigma_corrected_SIMUL_' + str(h+j+1) + '.pdf')
     
     
-    
-    
-    
+ 
     
 
