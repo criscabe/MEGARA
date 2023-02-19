@@ -38,7 +38,7 @@ $ python 1_simulations_reduction.py --stage3
 
 **2_lines_analysis.py**: This file software has been employed to analyze simulated reduced MEGARA data (RSS images) and generate the maps with the emission-line properties.
 
-The following command will analyze the [OIII]5007 emission line:
+The following command shows an examplee of the [OIII]5007 emission-line analysis:
 
 ```bash
 $ python 2_lines_analysis.py --OIII5007 --analyze
@@ -48,7 +48,7 @@ The parameter _'plots'_ allows the user to create and save the figures.
 ```bash
 $ python 2_lines_analysis.py --OIII5007 --analyze --plots
 ```
-The analysis can be performed with more than one emission line:
+The analysis can be performed with more than one emission line (e.g., [OIII]5007 and Hbeta):
 
 ```bash
 $ python 2_lines_analysis.py --OIII5007 --Hbeta --analyze --plots
