@@ -122,3 +122,5 @@ if __name__ == "__main__":
             hdulist[0].data[:,16] = resta_realsimul_velocity
             hdulist[0].data[:,17] = resta_realsimul_sigma
             hdulist[0].data[:,18] = resta_realsimul_sigma_corrected
+
+            
