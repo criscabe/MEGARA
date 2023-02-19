@@ -23,7 +23,7 @@ Webpage (source): https://github.com/criscabe/MEGARA
 --------------------------------------------------------------------------------------
 
 
-**1) 1_simulations_reduction.py**: # This file software has been employed to add Gaussian noise to the images taken with the MEGARA IFU instrument at GTC and automatically reduce the simulated data.
+**1_simulations_reduction.py**: This file software has been employed to add Gaussian noise to the images taken with the MEGARA IFU instrument at GTC and automatically reduce the simulated data.
 
 The following command will run all the steps of MEGARA DRP:
 
@@ -36,8 +36,8 @@ In case we are interested in running a particular step of MEGARA DRP (e.g., step
 $ python 1_simulations_reduction.py --stage3
 ```
 
-**2) 2_lines_analysis.py**: Analyze simulated reduced data
+**2_lines_analysis.py**: Analyze simulated reduced data
 
-**3) 3_residuals.py**: Compute the median of simulations and residuals
+**3_residuals.py**: Compute the median of simulations and residuals
 
-**4) 4_uncertainties.py**: Compute the uncertainties of different parameters
+**4_uncertainties.py**: Compute the uncertainties of different parameters
