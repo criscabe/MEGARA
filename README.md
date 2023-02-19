@@ -36,7 +36,24 @@ In case we are interested in running a particular step of MEGARA DRP (e.g., step
 $ python 1_simulations_reduction.py --stage3
 ```
 
-**2_lines_analysis.py**: Analyze simulated reduced data
+**2_lines_analysis.py**: This file software has been employed to analyze simulated reduced MEGARA data (RSS images) and generate the maps with the emission-line properties.
+
+The following command will analyze the [OIII]5007 emission line:
+
+```bash
+$ python 2_lines_analysis.py --OIII5007 --analyze
+```
+The parameter _'plots'_ allows the user to create and save the figures.
+
+```bash
+$ python 2_lines_analysis.py --OIII5007 --analyze --plots
+```
+The analysis can be performed with more than one emission line:
+
+```bash
+$ python 2_lines_analysis.py --OIII5007 --Hbeta --analyze --plots
+```
+
 
 **3_residuals.py**: Compute the median of simulations and residuals
 
