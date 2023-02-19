@@ -28,13 +28,13 @@ Webpage (source): https://github.com/criscabe/MEGARA
 The following command will run all the steps of MEGARA DRP:
 
 ```bash
-_$ python 1_simulations_reduction.py --all_
-´´´
+$ python 1_simulations_reduction.py --all
+```
 
 In case we are interested in running a particular step of MEGARA DRP (e.g., step 3: wavelength calibration), we can specify it as:
 ```bash
-_$ python 1_simulations_reduction.py --stage3_
-´´´
+$ python 1_simulations_reduction.py --stage3
+```
 
 **2) 2_lines_analysis.py**: Analyze simulated reduced data
 
