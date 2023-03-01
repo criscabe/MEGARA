@@ -17,9 +17,11 @@ import os
 import argparse
 import numpy as np
 import time
+import shutil
+import glob
+from astropy.io import ascii, fits
 
 
-from astropy.io import fits
 
 
 
@@ -30,11 +32,38 @@ def simulR(sigma_c):
     R = np.sqrt(2)*sigma_c * np.sqrt(-np.log(1-z1))*np.cos(2 * np.pi * z2)
     return R
 
+def simulImages(list_images, list_images_simul):
+    for i in range(len(list_images)):
+        with fits.open(list_images[i], mode='readonly') as hdulist:
+            image  = hdulist[0].data
+
+        resta = image - bias_artificial
+        image_positive = np.copy(resta)
+        image_positive[np.where(resta <= 0)] = 0.0
+
+        sigma_c = np.sqrt(image_positive /g + sigma_rms**2 )
+            
+        image_simul = image + simulR(sigma_c)
+                
+        with fits.open(list_images_simul[i], mode='update') as hdulist:
+            hdulist[0].data = image_simul - 32768
+
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Run MEGARA DRP')
+    parser.add_argument("nsimul",
+                        help="Number of simulations",type=int)
+    parser.add_argument("initializer",
+                        help="Initializer of simulations",type=int)
+    parser.add_argument('VPH',
+                        help="VPH used during the observations")
+    parser.add_argument('target',
+                        help="Name of the target")
+    parser.add_argument('OB',
+                        help="Observing Block")
+    ##
     parser.add_argument("--stage0", help = "Run step 0: BIAS",
                         action="store_true")
     parser.add_argument("--stage1", help = "Run step 1: TraceMap",
@@ -56,22 +85,87 @@ if __name__ == "__main__":
     parser.add_argument("--all", help = "Run all the steps of MEGARA DRP",
                         action="store_true")
 
+
     args = parser.parse_args()
     
     abs_path = os.path.abspath(os.getcwd())
 
 #####################################
 
-
     np.random.seed(70) 
     
-    nsimul = 50
+    nsimul = int(args.nsimul)
+    h = int(args.initializer)
     
-    h = 0
+    VPH = str(args.VPH)
+    target = str(args.target)
+    OB = str(args.OB)
 
 ###########
-    image_bias = 'data/0003396335-20220505-MEGARA-MegaraBiasImage.fits'
 
+    list_bias1 = sorted(glob.glob(f'{abs_path}/data/*-MEGARA-MegaraBiasImage.fits'))
+    list_arcs1 = sorted(glob.glob(f'{abs_path}/data/*-MegaraArcCalibration.fits'))
+    list_flat1 = sorted(glob.glob(f'{abs_path}/data/*-MEGARA-MegaraTraceMap.fits'))
+    
+    # Create list_obj.txt with the object images
+    
+    objects = ascii.read('list_obj.txt', names=['images'], data_start=0)
+
+    list_obj = []
+    for i in range(len(objects)):
+        list_obj.append(objects[i][0])
+    
+    # Create list_star.txt with the object images
+    
+    stars = ascii.read('list_star.txt', names=['images'], data_start=0)
+
+    list_star = []
+    for i in range(len(stars)):
+        list_star.append(stars[i][0])
+
+###########
+
+
+    list_bias = []
+    list_arcs = []
+    list_flat = []
+
+
+    list_bias_simul = []
+    list_arcs_simul = []
+    list_flat_simul = []
+    list_obj_simul = []
+    list_star_simul = []
+
+    for file in list_bias1:
+        shutil.copy2(file, file.replace('.fits', '_simul.fits'))
+        list_bias.append('/'.join(file.split('/')[-2:]))
+        a = file.replace('.fits', '_simul.fits')
+        list_bias_simul.append('/'.join(a.split('/')[-2:]))
+
+    for file in list_arcs1:
+        shutil.copy2(file, file.replace('.fits', '_simul.fits'))
+        list_arcs.append('/'.join(file.split('/')[-2:]))
+        a = file.replace('.fits', '_simul.fits')
+        list_arcs_simul.append('/'.join(a.split('/')[-2:]))
+        
+    for file in list_flat1:
+        shutil.copy2(file, file.replace('.fits', '_simul.fits'))
+        list_flat.append('/'.join(file.split('/')[-2:]))
+        a = file.replace('.fits', '_simul.fits')
+        list_flat_simul.append('/'.join(a.split('/')[-2:]))
+        
+    for file in list_obj:
+        shutil.copy2(file, file.replace('.fits', '_simul.fits'))
+        list_obj_simul.append(file.replace('.fits', '_simul.fits'))
+        
+    for file in list_star:
+        shutil.copy2(file, file.replace('.fits', '_simul.fits'))
+        list_star_simul.append(file.replace('.fits', '_simul.fits'))
+    
+###########
+
+    image_bias = list_bias[0]
 
     with fits.open(image_bias, mode='readonly') as hdulist:
         bias  = hdulist[0].data
@@ -91,187 +185,18 @@ if __name__ == "__main__":
     # readout noise
     sigma_rms = 2.0
 
-###########
+#################################
 
-    os.system('cp data/0003396335-20220505-MEGARA-MegaraBiasImage.fits data/0003396335-20220505-MEGARA-MegaraBiasImage_simul.fits')
-    os.system('cp data/0003396336-20220505-MEGARA-MegaraBiasImage.fits data/0003396336-20220505-MEGARA-MegaraBiasImage_simul.fits')
-    os.system('cp data/0003396337-20220505-MEGARA-MegaraBiasImage.fits data/0003396337-20220505-MEGARA-MegaraBiasImage_simul.fits')
-    os.system('cp data/0003396338-20220505-MEGARA-MegaraBiasImage.fits data/0003396338-20220505-MEGARA-MegaraBiasImage_simul.fits')
-    os.system('cp data/0003396339-20220505-MEGARA-MegaraBiasImage.fits data/0003396339-20220505-MEGARA-MegaraBiasImage_simul.fits')
-    os.system('cp data/0003396340-20220505-MEGARA-MegaraBiasImage.fits data/0003396340-20220505-MEGARA-MegaraBiasImage_simul.fits')
-    os.system('cp data/0003396341-20220505-MEGARA-MegaraBiasImage.fits data/0003396341-20220505-MEGARA-MegaraBiasImage_simul.fits')
-    ######
-    os.system('cp data/0003396350-20220505-MEGARA-MegaraTraceMap.fits data/0003396350-20220505-MEGARA-MegaraTraceMap_simul.fits')
-    os.system('cp data/0003396351-20220505-MEGARA-MegaraTraceMap.fits data/0003396351-20220505-MEGARA-MegaraTraceMap_simul.fits')
-    os.system('cp data/0003396352-20220505-MEGARA-MegaraTraceMap.fits data/0003396352-20220505-MEGARA-MegaraTraceMap_simul.fits')
-    ######
-    os.system('cp data/0003396354-20220505-MEGARA-MegaraArcCalibration.fits data/0003396354-20220505-MEGARA-MegaraArcCalibration_simul.fits')
-    os.system('cp data/0003396355-20220505-MEGARA-MegaraArcCalibration.fits data/0003396355-20220505-MEGARA-MegaraArcCalibration_simul.fits')
-    os.system('cp data/0003396356-20220505-MEGARA-MegaraArcCalibration.fits data/0003396356-20220505-MEGARA-MegaraArcCalibration_simul.fits')
-    ######
-    os.system('cp data/0003396137-20220505-MEGARA-MegaraLcbImage.fits data/0003396137-20220505-MEGARA-MegaraLcbImage_simul.fits')
-    os.system('cp data/0003396138-20220505-MEGARA-MegaraLcbImage.fits data/0003396138-20220505-MEGARA-MegaraLcbImage_simul.fits')
-    os.system('cp data/0003396139-20220505-MEGARA-MegaraLcbImage.fits data/0003396139-20220505-MEGARA-MegaraLcbImage_simul.fits')
-    ######
-    os.system('cp data/0003396202-20220505-MEGARA-MegaraLcbImage.fits data/0003396202-20220505-MEGARA-MegaraLcbImage_simul.fits')
-    os.system('cp data/0003396203-20220505-MEGARA-MegaraLcbImage.fits data/0003396203-20220505-MEGARA-MegaraLcbImage_simul.fits')
-    os.system('cp data/0003396204-20220505-MEGARA-MegaraLcbImage.fits data/0003396204-20220505-MEGARA-MegaraLcbImage_simul.fits')
-
-###########
-
-    list_bias = ['data/0003396335-20220505-MEGARA-MegaraBiasImage.fits',
-            'data/0003396336-20220505-MEGARA-MegaraBiasImage.fits',
-            'data/0003396337-20220505-MEGARA-MegaraBiasImage.fits',
-            'data/0003396338-20220505-MEGARA-MegaraBiasImage.fits',
-            'data/0003396339-20220505-MEGARA-MegaraBiasImage.fits',
-            'data/0003396340-20220505-MEGARA-MegaraBiasImage.fits',
-            'data/0003396341-20220505-MEGARA-MegaraBiasImage.fits']
-
-    list_arcs = ['data/0003396354-20220505-MEGARA-MegaraArcCalibration.fits',
-            'data/0003396355-20220505-MEGARA-MegaraArcCalibration.fits',
-            'data/0003396356-20220505-MEGARA-MegaraArcCalibration.fits']
-
-
-    list_flat = ['data/0003396350-20220505-MEGARA-MegaraTraceMap.fits',
-            'data/0003396351-20220505-MEGARA-MegaraTraceMap.fits',
-            'data/0003396352-20220505-MEGARA-MegaraTraceMap.fits']
-
-    list_obj = ['data/0003396202-20220505-MEGARA-MegaraLcbImage.fits',
-            'data/0003396203-20220505-MEGARA-MegaraLcbImage.fits',
-            'data/0003396204-20220505-MEGARA-MegaraLcbImage.fits']
-
-    list_star = ['data/0003396137-20220505-MEGARA-MegaraLcbImage.fits',
-            'data/0003396138-20220505-MEGARA-MegaraLcbImage.fits',
-            'data/0003396139-20220505-MEGARA-MegaraLcbImage.fits']
-
-###########
-
-    list_bias_simul = ['data/0003396335-20220505-MEGARA-MegaraBiasImage_simul.fits',
-                'data/0003396336-20220505-MEGARA-MegaraBiasImage_simul.fits',
-                'data/0003396337-20220505-MEGARA-MegaraBiasImage_simul.fits',
-                'data/0003396338-20220505-MEGARA-MegaraBiasImage_simul.fits',
-                'data/0003396339-20220505-MEGARA-MegaraBiasImage_simul.fits',
-                'data/0003396340-20220505-MEGARA-MegaraBiasImage_simul.fits',
-                'data/0003396341-20220505-MEGARA-MegaraBiasImage_simul.fits']
-    
-    list_arcs_simul = ['data/0003396354-20220505-MEGARA-MegaraArcCalibration_simul.fits',
-                'data/0003396355-20220505-MEGARA-MegaraArcCalibration_simul.fits',
-                'data/0003396356-20220505-MEGARA-MegaraArcCalibration_simul.fits']
-    
-    
-    list_flat_simul = ['data/0003396350-20220505-MEGARA-MegaraTraceMap_simul.fits',
-                'data/0003396351-20220505-MEGARA-MegaraTraceMap_simul.fits',
-                'data/0003396352-20220505-MEGARA-MegaraTraceMap_simul.fits']
-    
-    list_obj_simul = ['data/0003396202-20220505-MEGARA-MegaraLcbImage_simul.fits',
-                'data/0003396203-20220505-MEGARA-MegaraLcbImage_simul.fits',
-                'data/0003396204-20220505-MEGARA-MegaraLcbImage_simul.fits']
-    
-    list_star_simul = ['data/0003396137-20220505-MEGARA-MegaraLcbImage_simul.fits',
-                'data/0003396138-20220505-MEGARA-MegaraLcbImage_simul.fits',
-                'data/0003396139-20220505-MEGARA-MegaraLcbImage_simul.fits']
-
-###########
-    
     for j in range(nsimul):
         print('Simulation: ' + str(h+j+1))
         time00 = time.perf_counter()
-    #### BIAS #######
-        print('----> Simulando BIAS')
-        for i in range(len(list_bias)):
-            with fits.open(list_bias[i], mode='readonly') as hdulist:
-                bias  = hdulist[0].data
 
-            resta = bias - bias_artificial
-            image_positive = np.copy(resta)
-            image_positive[np.where(resta <= 0)] = 0.0
+        simulImages(list_bias,list_bias_simul)
+        simulImages(list_arcs,list_arcs_simul)
+        simulImages(list_flat,list_flat_simul)
+        simulImages(list_obj,list_obj_simul)
+        simulImages(list_star,list_star_simul)
 
-            sigma_c = np.sqrt(image_positive /g + sigma_rms**2 )
-            
-            bias_simul = bias + simulR(sigma_c)
-                
-            with fits.open(list_bias_simul[i], mode='update') as hdulist:
-                hdulist[0].data = bias_simul - 32768
-
-        
-#### ARC #######
-        print('----> Simulando ARCS')
-        for i in range(len(list_arcs)):
-            with fits.open(list_arcs[i], mode='readonly') as hdulist:
-                arcs  = hdulist[0].data
-            
-            resta = arcs - bias_artificial
-            image_positive = np.copy(resta)
-            image_positive[np.where(resta <= 0)] = 0.0
-
-            sigma_c = np.sqrt(image_positive /g + sigma_rms**2 )
-
-            
-            arcs_simul = arcs + simulR(sigma_c)
-            
-            with fits.open(list_arcs_simul[i], mode='update') as hdulist:
-                hdulist[0].data = arcs_simul - 32768
-            
-            
-#### FLAT #######        
-        print('----> Simulando FLATS')     
-        for i in range(len(list_flat)):
-            with fits.open(list_flat[i], mode='readonly') as hdulist:
-                flat  = hdulist[0].data
-            
-            resta = flat - bias_artificial
-            image_positive = np.copy(resta)
-            image_positive[np.where(resta <= 0)] = 0.0
-
-            sigma_c = np.sqrt(image_positive /g + sigma_rms**2 )
-    
-            
-            flat_simul = flat + simulR(sigma_c)
-            
-            with fits.open(list_flat_simul[i], mode='update') as hdulist:
-                hdulist[0].data = flat_simul - 32768
-            
-            
-#### OBJECT #######  
-        print('----> Simulando OBJECT')  
-        for i in range(len(list_obj)):
-            with fits.open(list_obj[i], mode='readonly') as hdulist:
-                obj  = hdulist[0].data
-
-            
-            resta = obj - bias_artificial
-            image_positive = np.copy(resta)
-            image_positive[np.where(resta <= 0)] = 0.0
-            
-            sigma_c = np.sqrt(image_positive /g + sigma_rms**2 )
-            
- 
-            obj_simul = obj + simulR(sigma_c)
-            
-            with fits.open(list_obj_simul[i], mode='update') as hdulist:
-                 hdulist[0].data = obj_simul - 32768
-           
-            
-    
-#### STAR #######  
-        print('----> Simulando STAR')  
-        for i in range(len(list_star)):
-            with fits.open(list_star[i], mode='readonly') as hdulist:
-                star  = hdulist[0].data
-
-            resta = star - bias_artificial
-            image_positive = np.copy(resta)
-            image_positive[np.where(resta <= 0)] = 0.0
-
-            sigma_c = np.sqrt(image_positive /g + sigma_rms**2 )
-    
-                
-            star_simul = star + simulR(sigma_c)
-            
-            with fits.open(list_star_simul[i], mode='update') as hdulist:
-                hdulist[0].data = star_simul - 32768
-            
-          
         time11 = time.perf_counter()
         print(f"Runtime simulation : {time11 - time00:0.2f} seconds")
         print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
@@ -293,8 +218,8 @@ if __name__ == "__main__":
             print('.............................')
             print('--------Running step 1: TraceMap--------')
             print('.............................')
-            os.system('numina run 1_tracemap_LRB_simul.yaml --link-files -r ../control.yaml')
-            os.system('cp obsid1_LR-B_SIMUL_results/master_traces.json   ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/TraceMap/LCB/LR-B')
+            os.system('numina run 1_tracemap_' + str(VPH) + '_simul.yaml --link-files -r ../control.yaml')
+            os.system('cp obsid1_' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '_SIMUL_results/master_traces.json   ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/TraceMap/LCB/' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '/')
             
         time2 = time.perf_counter()
     
@@ -302,8 +227,8 @@ if __name__ == "__main__":
             print('.............................')
             print('--------Running step 2: ModelMap--------')
             print('.............................')
-            os.system('numina run 2_modelmap_LRB_simul.yaml  --link-files -r ../control.yaml')
-            os.system('cp obsid2_LR-B_SIMUL_results/master_model.json ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/ModelMap/LCB/LR-B/')
+            os.system('numina run 2_modelmap_' + str(VPH) + '_simul.yaml  --link-files -r ../control.yaml')
+            os.system('cp obsid2_' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '_SIMUL_results/master_model.json ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/ModelMap/LCB/' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '/')
             
         time3 = time.perf_counter()
     
@@ -311,8 +236,8 @@ if __name__ == "__main__":
             print('.............................')
             print('--------Running step 3: Wavelength calibration--------')
             print('.............................')
-            os.system('numina run 3_wavecalib_LRB_simul.yaml --link-files -r ../control.yaml')
-            os.system('cp obsid3_LR-B_SIMUL_results/master_wlcalib.json ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/WavelengthCalibration/LCB/LR-B')
+            os.system('numina run 3_wavecalib_' + str(VPH) + '_simul.yaml --link-files -r ../control.yaml')
+            os.system('cp obsid3_' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '_SIMUL_results/master_wlcalib.json ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/WavelengthCalibration/LCB/' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '/')
             
         time4 = time.perf_counter()
     
@@ -320,8 +245,8 @@ if __name__ == "__main__":
             print('.............................')
             print('--------Running step 4: FiberFlat--------')
             print('.............................')
-            os.system('numina run 4_fiberflat_LRB_simul.yaml --link-files -r ../control.yaml')
-            os.system('cp obsid4_LR-B_SIMUL_results/master_fiberflat.fits ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/MasterFiberFlat/LCB/LR-B')
+            os.system('numina run 4_fiberflat_' + str(VPH) + '_simul.yaml --link-files -r ../control.yaml')
+            os.system('cp obsid4_' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '_SIMUL_results/master_fiberflat.fits ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/MasterFiberFlat/LCB/' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '/')
             
         time5 = time.perf_counter()
     
@@ -329,8 +254,8 @@ if __name__ == "__main__":
             print('.............................')
             print('--------Running step 5: TwilightFlat--------')
             print('.............................')
-            os.system('numina run 5_twilight_LRB_simul.yaml --link-files -r ../control.yaml')
-            os.system('cp obsid5_LR-B_SIMUL_results/master_twilightflat.fits ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/MasterTwilightFlat/LCB/LR-B/')
+            os.system('numina run 5_twilight_' + str(VPH) + '_simul.yaml --link-files -r ../control.yaml')
+            os.system('cp obsid5_' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '_SIMUL_results/master_twilightflat.fits ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/MasterTwilightFlat/LCB/' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '/')
     
         time6 = time.perf_counter()
     
@@ -338,8 +263,8 @@ if __name__ == "__main__":
             print('.............................')
             print('--------Running step 6: LCB adquisition--------')
             print('.............................')
-            os.system('numina run 6_Lcbadquisition_LRB_simul.yaml --link-files -r ../control.yaml')
-    #        os.system('more obsid6_LR-B_SIMUL_results/processing.log ')
+            os.system('numina run 6_Lcbadquisition_' + str(VPH) + '_simul.yaml --link-files -r ../control.yaml')
+    #        os.system('more obsid6_' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '_SIMUL_results/processing.log ')
     
         time7 = time.perf_counter()
     
@@ -347,8 +272,8 @@ if __name__ == "__main__":
             print('.............................')
             print('--------Running step 7: Standard Star--------')
             print('.............................')
-            os.system('numina run 7_Standardstar_LRB_simul.yaml --link-files -r ../control.yaml')
-            os.system('cp obsid7_LR-B_SIMUL_results/master_sensitivity.fits ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/MasterSensitivity/LCB/LR-B/')
+            os.system('numina run 7_Standardstar_' + str(VPH) + '_simul.yaml --link-files -r ../control.yaml')
+            os.system('cp obsid7_' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '_SIMUL_results/master_sensitivity.fits ../ca3558e3-e50d-4bbc-86bd-da50a0998a48/MasterSensitivity/LCB/' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '/')
         
         time8 = time.perf_counter()
         
@@ -356,12 +281,12 @@ if __name__ == "__main__":
             print('.............................')
             print('--------Running step 8: Reduce LCB--------')
             print('.............................')
-            os.system('numina run 8_reduce_LCB_LRB_simul.yaml --link-files -r ../control.yaml')
+            os.system('numina run 8_reduce_LCB_' + str(VPH) + '_simul.yaml --link-files -r ../control.yaml')
             
             
-            os.system('cp obsid8_LR-B_UM461_ob2_SIMUL_results/final_rss.fits ../results_SIMUL/UM461_LRB_SIMUL_' + str(h+j+1) + '.fits')
-            os.system('megaradrp-cube obsid8_LR-B_UM461_ob2_SIMUL_results/final_rss.fits -p 0.4 -o cube_LRB.fits --wcs-pa-from-header')
-            os.system('mv cube_LRB.fits ../results_SIMUL/cube_LRB_SIMUL_' + str(h+j+1) + '.fits')
+            os.system('cp obsid8_' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '_' + str(target) + '_' + str(OB) + '_SIMUL_results/final_rss.fits ../results_SIMUL/' + str(target) + '_' + str(VPH) + '_SIMUL_' + str(h+j+1) + '.fits')
+            os.system('megaradrp-cube obsid8_' + str(VPH[0:2]) + '-' + str(VPH[-1]) + '_' + str(target) + '_' + str(OB) + '_SIMUL_results/final_rss.fits -p 0.4 -o cube_' + str(VPH) + '.fits --wcs-pa-from-header')
+            os.system('mv cube_' + str(VPH) + '.fits ../results_SIMUL/cube_' + str(VPH) + '_SIMUL_' + str(h+j+1) + '.fits')
  
             
         time9 = time.perf_counter()
@@ -381,6 +306,5 @@ if __name__ == "__main__":
         print(f"Runtime Step 8: {time9 - time8:0.2f} seconds")
         print("----------------------------------------------")
         print("----------------------------------------------")
-    
 
-    
+
