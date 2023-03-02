@@ -26,10 +26,42 @@ Webpage (source): https://github.com/criscabe/MEGARA
 
 **1_simulations_reduction.py**: This file software has been employed to add Gaussian noise to the images taken with the MEGARA IFU instrument at GTC and automatically reduce the simulated data.
 
-The following command will run all the steps of MEGARA DRP:
+The help function will provide information about the required and optional arguments:
 
 ```bash
-$ python 1_simulations_reduction.py --all
+$  python 1_simulations_reduction.py -h                       
+usage: 1_simulations_reduction.py [-h] [--stage0] [--stage1] [--stage2]
+                                  [--stage3] [--stage4] [--stage5] [--stage6]
+                                  [--stage7] [--stage8] [--all]
+                                  nsimul initializer VPH target OB
+
+Run MEGARA DRP
+
+positional arguments:
+  nsimul       Number of simulations
+  initializer  Initializer of simulations
+  VPH          VPH used during the observations
+  target       Name of the target
+  OB           Observing Block
+
+optional arguments:
+  -h, --help   show this help message and exit
+  --stage0     Run step 0: BIAS
+  --stage1     Run step 1: TraceMap
+  --stage2     Run step 2: ModelMap
+  --stage3     Run step 3: Wavelength calibration
+  --stage4     Run step 4: FiberFlat
+  --stage5     Run step 5: TwilightFlat
+  --stage6     Run step 6: LCB adquisition
+  --stage7     Run step 7: Standard Star
+  --stage8     Run step 8: Reduce LCB
+  --all        Run all the steps of MEGARA DRP
+  ```
+
+The following command will run all the steps of MEGARA DRP:
+  
+```bash
+$ python 1_simulations_reduction.py 100 0 LRR galaxy_name ob1 --all
 ```
 
 In case we are interested in running a particular step of MEGARA DRP (e.g., step 3: wavelength calibration), we can specify it as:
