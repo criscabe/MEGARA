@@ -58,7 +58,7 @@ optional arguments:
   --all        Run all the steps of MEGARA DRP
   ```
 
-The following command will run all the steps of MEGARA DRP:
+The following command will run all the steps of MEGARA DRP performing 100 simulations on data taken with the LRR VPH:
   
 ```bash
 $ python 1_simulations_reduction.py 100 0 LRR galaxy_name ob1 --all
@@ -66,7 +66,7 @@ $ python 1_simulations_reduction.py 100 0 LRR galaxy_name ob1 --all
 
 In case we are interested in running a particular step of MEGARA DRP (e.g., step 3: wavelength calibration), we can specify it as:
 ```bash
-$ python 1_simulations_reduction.py --stage3
+$ python 1_simulations_reduction.py 100 0 LRR galaxy_name ob1 --stage3
 ```
 
 **2_lines_analysis.py**: This file software has been employed to analyze simulated reduced MEGARA data (RSS images) and generate the maps with the emission-line properties.
