@@ -24,7 +24,7 @@ Webpage (source): https://github.com/criscabe/MEGARA
 
 ### Examples and help with the codes
 
-**1_simulations_reduction.py**: This file software has been employed to add Gaussian noise to the images taken with the MEGARA IFU instrument at GTC and automatically reduce the simulated data.
+**[1_simulations_reduction.py](https://github.com/criscabe/MEGARA/blob/main/code/1_simulations_reduction.py)**: This file software has been employed to add Gaussian noise to the images taken with the MEGARA IFU instrument at GTC and automatically reduce the simulated data.
 
 The help function will provide information about the required and optional arguments:
 
