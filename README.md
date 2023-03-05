@@ -119,20 +119,15 @@ optional arguments:
   -z REDSHIFT, --redshift REDSHIFT
                         Redshift for target and catalog lines
 ```
-The following command shows an example of the Hα emission-line analysis:
+The following command shows an example of the Hα emission-line analysis (100 simulated images, LRR VPH):
 
 ```bash
-$ python 2_lines_analysis.py --OIII5007 --analyze
+$ python 2_lines_analysis.py 100 0 LRR galaxy_name --nameEL Halpha --analyze -f 0 -S 5 -w 6563 -z 0.1 -LW1 6553 -LW2 6573 -CW1 6495 -CW2 6540 -PW1 6500 -PW2 6650
 ```
-In this step the user must take into account additional parameters such as the redshift of the target, the wavelenght range required to fit the continuum and the emission line, and the minimum signal-to-noise ratio to perform the fit. The parameter _'plots'_ allows the user to create and save the figures.
+The parameter _'plots'_ allows the user to create and save the figures.
 
 ```bash
-$ python 2_lines_analysis.py --OIII5007 --analyze --plots
-```
-The analysis can be performed with more than one emission line (e.g., [OIII]5007 and Hbeta):
-
-```bash
-$ python 2_lines_analysis.py --OIII5007 --Hbeta --analyze --plots
+$  python 2_lines_analysis.py 100 0 LRR galaxy_name --nameEL Halpha --plots
 ```
 
 
