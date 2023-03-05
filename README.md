@@ -70,8 +70,56 @@ $ python 1_simulations_reduction.py 100 0 LRR galaxy_name ob1 --stage3
 ```
 
 **[2_lines_analysis.py](https://github.com/criscabe/MEGARA/blob/main/code/2_lines_analysis.py)**: This file software has been employed to analyze simulated reduced MEGARA data (RSS images) and generate the maps with the emission-line properties.
+The help function will provide information about the required and optional arguments:
+```bash
+$ python 2_lines_analysis.py -h                               
+usage: 2_lines_analysis.py [-h] [--nameEL NAMEEL] [--analyze] [--plots]
+                           [-f FITTING FUNCTION 0,1,2] [-S MINIMUM S/N]
+                           [-LW1 LOWER WAVELENGTH - LINE]
+                           [-LW2 UPPER WAVELENGTH - LINE]
+                           [-CW1 LOWER WAVELENGTH - CONT]
+                           [-CW2 UPPER WAVELENGTH - CONT]
+                           [-PW1 LOWER WAVELENGTH - PLOT]
+                           [-PW2 UPPER WAVELENGTH - PLOT]
+                           [-w LINE CENTRAL WAVELENGTH] [-z REDSHIFT]
+                           nsimul initializer VPH target
 
-The following command shows an example of the [OIII]5007 emission-line analysis:
+ANALYZE the RSS images
+
+positional arguments:
+  nsimul                Number of simulations
+  initializer           Initializer of simulations
+  VPH                   VPH used during the observations
+  target                Name of the target
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --nameEL NAMEEL       Name of the emission line
+  --analyze             Analyze the corresponding line
+  --plots               Create and save the figures
+  -f FITTING FUNCTION (0,1,2), --method FITTING FUNCTION (0,1,2)
+                        Fitting function (0=gauss_hermite, 1=gauss,
+                        2=double_gauss)
+  -S MINIMUM S/N, --limsnr MINIMUM S/N
+                        Mininum Signal-to-noise ratio in each spaxel
+  -LW1 LOWER WAVELENGTH - LINE, --lcut1 LOWER WAVELENGTH - LINE
+                        Lower rest-frame wavelength for line (AA)
+  -LW2 UPPER WAVELENGTH - LINE, --lcut2 UPPER WAVELENGTH - LINE
+                        Upper rest-frame wavelength for line (AA)
+  -CW1 LOWER WAVELENGTH - CONT, --ccut1 LOWER WAVELENGTH - CONT
+                        Lower rest-frame wavelength for cont. (AA)
+  -CW2 UPPER WAVELENGTH - CONT, --ccut2 UPPER WAVELENGTH - CONT
+                        Upper rest-frame wavelength for cont. (AA)
+  -PW1 LOWER WAVELENGTH - PLOT, --pcut1 LOWER WAVELENGTH - PLOT
+                        Lower (observed) wavelength for plot (AA)
+  -PW2 UPPER WAVELENGTH - PLOT, --pcut2 UPPER WAVELENGTH - PLOT
+                        Upper (observed) wavelength for plot (AA)
+  -w LINE CENTRAL WAVELENGTH, --ctwl LINE CENTRAL WAVELENGTH
+                        Central rest-frame wavelength for line (AA)
+  -z REDSHIFT, --redshift REDSHIFT
+                        Redshift for target and catalog lines
+```
+The following command shows an example of the Hα emission-line analysis:
 
 ```bash
 $ python 2_lines_analysis.py --OIII5007 --analyze
