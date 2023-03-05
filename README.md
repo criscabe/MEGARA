@@ -69,7 +69,7 @@ In case we are interested in running a particular step of MEGARA DRP (e.g., step
 $ python 1_simulations_reduction.py 100 0 LRR galaxy_name ob1 --stage3
 ```
 
-**2_lines_analysis.py**: This file software has been employed to analyze simulated reduced MEGARA data (RSS images) and generate the maps with the emission-line properties.
+**[2_lines_analysis.py](https://github.com/criscabe/MEGARA/blob/main/code/2_lines_analysis.py)**: This file software has been employed to analyze simulated reduced MEGARA data (RSS images) and generate the maps with the emission-line properties.
 
 The following command shows an example of the [OIII]5007 emission-line analysis:
 
@@ -88,14 +88,14 @@ $ python 2_lines_analysis.py --OIII5007 --Hbeta --analyze --plots
 ```
 
 
-**3_residuals.py**: This file software has been employed to compute both the median value of different parameters derived from the simulated MEGARA data, and the residuals (real data - median of the simulations).
+**[3_residuals.py](https://github.com/criscabe/MEGARA/blob/main/code/3_residuals.py)**: This file software has been employed to compute both the median value of different parameters derived from the simulated MEGARA data, and the residuals (real data - median of the simulations).
 
 In this case, the user should just specify the emission line of interest (e.g., [OIII]5007):
 ```bash
 $ python 3_residuals.py --OIII5007 
 ```
 
-**4_uncertainties.py**: This file software has been employed to compute the uncertainties of different parameters derived from the simulated MEGARA data.
+**[4_uncertainties.py](https://github.com/criscabe/MEGARA/blob/main/code/4_uncertainties.py)**: This file software has been employed to compute the uncertainties of different parameters derived from the simulated MEGARA data.
 
 In this case, the user should just specify the emission line of interest (e.g., [OIII]5007):
 ```bash
