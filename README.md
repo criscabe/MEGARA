@@ -28,8 +28,8 @@ Webpage (source): https://github.com/criscabe/MEGARA
 
 The help function will provide information about the required and optional arguments:
 
-```bash
-$  python 1_simulations_reduction.py -h                       
+```console
+criscabe:~/MEGARA/N/ $  python 1_simulations_reduction.py -h                       
 usage: 1_simulations_reduction.py [-h] [--stage0] [--stage1] [--stage2]
                                   [--stage3] [--stage4] [--stage5] [--stage6]
                                   [--stage7] [--stage8] [--all]
@@ -121,7 +121,7 @@ The parameter _'plots'_ allows the user to create and save the maps of the emiss
 * Warning: to avoid the generation of multiple (and maybe unnecessary) images in this step, we recommend to reduce the number of simulations to 2-5.
 
 ```bash
-$  python 2_lines_analysis.py 5 0 LRR target_name -LINE Halpha --plots
+$ python 2_lines_analysis.py 5 0 LRR target_name -LINE Halpha --plots
 ```
 
 - - - - - - - - - - - - -
