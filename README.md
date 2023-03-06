@@ -153,7 +153,7 @@ optional arguments:
 To run this script, the user must indicate the name of the target and the emission line of interest. 
 Then, it offers several options: compute the median values of the simulations, the residuals, or the uncertainties (or any/all these options).
 
-As an example, the following command will both compute the random uncertainties of several parameters derived from the Hα emission line and save the 2D maps:
+As an example, the following command will compute the random uncertainties of several parameters derived from the Hα emission line and save the 2D maps:
 ```bash
 $ python 3_uncertainties.py target_name -LINE Halpha --uncertainties --plots
 ```
