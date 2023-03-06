@@ -126,7 +126,7 @@ $ python 2_lines_analysis.py 5 0 LRR target_name -LINE Halpha --plots
 
 - - - - - - - - - - - - -
 
-**[3_uncertainties.py]([https://github.com/criscabe/MEGARA/blob/main/code/3_residuals.py](https://github.com/criscabe/MEGARA/blob/main/code/3_uncertainties.py))**: This file software has been employed to compute the median of the simulations, the residuals (real data - median of the simulations), and the random uncertainties of different parameters derived from the MEGARA data.
+**[3_uncertainties.py](https://github.com/criscabe/MEGARA/blob/main/code/3_uncertainties.py)**: This file software has been employed to compute the median of the simulations, the residuals (real data - median of the simulations), and the random uncertainties of different parameters derived from the MEGARA data.
 
 The help function will provide information about the required and optional arguments:
 ```console
