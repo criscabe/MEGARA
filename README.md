@@ -76,7 +76,7 @@ $ python 1_simulations_reduction.py 100 0 LRR target_name ob1 --stage3
 
 The help function will provide information about the required and optional arguments:
 ```console
-$ python 2_lines_analysis.py -h
+criscabe:~/MEGARA/ $ python 2_lines_analysis.py -h
 usage: 2_lines_analysis.py [-h] [-LINE LINE] [--analyze] [--plots]
                            [-f {0,1,2}] [-S S] [-w W] [-z Z] [-LW1 LW1]
                            [-LW2 LW2] [-CW1 CW1] [-CW2 CW2] [-PW1 PW1]
