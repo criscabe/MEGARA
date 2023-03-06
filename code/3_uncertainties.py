@@ -21,6 +21,8 @@ import numpy as np
 from astropy.io import ascii
 from astropy.io import fits
 import cmd
+import glob
+import shutil
 
 
 def check_directory(path):
@@ -58,9 +60,7 @@ if __name__ == "__main__":
     print('.............................')
     
     
-    os.system('ls results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_SIMUL_*.fits > list_' + str(name) + '_SIMUL.txt')
-    
-    images_list = ascii.read('list_' + str(name) + '_SIMUL.txt', data_start = 0,names=['IMAGES'])
+    images_list = sorted(glob.glob('results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_SIMUL_*.fits'))
 
     
     IMAGES_SIMUL_snr = []
@@ -71,7 +71,7 @@ if __name__ == "__main__":
         
         
     for i in range(len(images_list)):
-        with fits.open(images_list[i][0], mode='readonly') as hdulist:
+        with fits.open(images_list[i], mode='readonly') as hdulist:
             image = hdulist[0].data
     
         IMAGES_SIMUL_snr.append(image[:,3])  ## SNR # 3 S/N at the peak of the line
@@ -96,7 +96,10 @@ if __name__ == "__main__":
         median_simul_velocity = np.nanmedian(IMAGES_SIMUL_velocity,axis=0)
         median_simul_sigma_corrected = np.nanmedian(IMAGES_SIMUL_sigma_corrected,axis=0)
             
-        os.system('cp results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_SIMUL_1.fits  results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_MEDIAN_SIMULATIONS.fits')
+        
+        file = 'results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_SIMUL_1.fits'
+        shutil.copy2(file,file.replace('SIMUL_1.fits', 'MEDIAN_SIMULATIONS.fits'))
+        
         
         print('.............................')
         print('Saving FITS file.......')
@@ -167,8 +170,10 @@ if __name__ == "__main__":
         residuals_velocity = image[:,16] - median_simul_velocity
         residuals_sigma_corrected = image[:,18] - median_simul_sigma_corrected
             
-            
-        os.system('cp results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_SIMUL_1.fits  results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_RESIDUALS.fits')
+        
+        
+        shutil.copy2(file,file.replace('SIMUL_1.fits', 'RESIDUALS.fits'))
+        
         
         print('.............................')
         print('Saving FITS file.......')
@@ -232,7 +237,8 @@ if __name__ == "__main__":
         std_simul_velocity = np.nanstd(IMAGES_SIMUL_velocity,axis=0)
         std_simul_sigma_corrected = np.nanstd(IMAGES_SIMUL_sigma_corrected,axis=0)
             
-        os.system('cp results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_SIMUL_1.fits  results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_STD_SIMULATIONS.fits')
+        
+        shutil.copy2(file,file.replace('SIMUL_1.fits', 'STD_SIMULATIONS.fits'))
     
         print('.............................')
         print('Saving FITS file.......')
@@ -277,5 +283,3 @@ if __name__ == "__main__":
             maxcut = input("maxcut sigma (km/s) corrected from instrumental sigma (UNCERTAINTIES): ")
             os.system('python N/visualization_c.py results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_STD_SIMULATIONS.fits -c 19  --min-cut ' + str(mincut) + ' --max-cut ' + str(maxcut) + ' --title STD_' + str(name) + '_sigma_corrected --label "km/s"  --wcs-grid')
             os.system('mv visualization_map.pdf results_SIMUL/LINES/' + str(name) + '/plots_STD/' + str(name) + '_' + str(target) + '_STD_sigma_corrected.pdf')
-            
-            
