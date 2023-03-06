@@ -277,3 +277,5 @@ if __name__ == "__main__":
             maxcut = input("maxcut sigma (km/s) corrected from instrumental sigma (UNCERTAINTIES): ")
             os.system('python N/visualization_c.py results_SIMUL/LINES/' + str(name) + '/' + str(name) + '_' + str(target) + '_STD_SIMULATIONS.fits -c 19  --min-cut ' + str(mincut) + ' --max-cut ' + str(maxcut) + ' --title STD_' + str(name) + '_sigma_corrected --label "km/s"  --wcs-grid')
             os.system('mv visualization_map.pdf results_SIMUL/LINES/' + str(name) + '/plots_STD/' + str(name) + '_' + str(target) + '_STD_sigma_corrected.pdf')
+            
+            
