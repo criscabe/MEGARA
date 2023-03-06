@@ -68,6 +68,7 @@ In case we are interested in running a particular step of MEGARA DRP (e.g., step
 ```bash
 $ python 1_simulations_reduction.py 100 0 LRR galaxy_name ob1 --stage3
 ```
+- - - - - - - - - - - - -
 
 **[2_lines_analysis.py](https://github.com/criscabe/MEGARA/blob/main/code/2_lines_analysis.py)**: This file software has been employed to analyze simulated reduced MEGARA data (RSS images) and generate the maps with the emission-line properties.
 The help function will provide information about the required and optional arguments:
