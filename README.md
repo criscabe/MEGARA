@@ -76,64 +76,48 @@ $ python 1_simulations_reduction.py 100 0 LRR target_name ob1 --stage3
 
 The help function will provide information about the required and optional arguments:
 ```bash
-$ python 2_lines_analysis.py -h                               
-usage: 2_lines_analysis.py [-h] [--nameEL NAMEEL] [--analyze] [--plots]
-                           [-f FITTING FUNCTION 0,1,2] [-S MINIMUM S/N]
-                           [-LW1 LOWER WAVELENGTH - LINE]
-                           [-LW2 UPPER WAVELENGTH - LINE]
-                           [-CW1 LOWER WAVELENGTH - CONT]
-                           [-CW2 UPPER WAVELENGTH - CONT]
-                           [-PW1 LOWER WAVELENGTH - PLOT]
-                           [-PW2 UPPER WAVELENGTH - PLOT]
-                           [-w LINE CENTRAL WAVELENGTH] [-z REDSHIFT]
+$ python 2_lines_analysis.py -h
+usage: 2_lines_analysis.py [-h] [-LINE LINE] [--analyze] [--plots]
+                           [-f {0,1,2}] [-S S] [-w W] [-z Z] [-LW1 LW1]
+                           [-LW2 LW2] [-CW1 CW1] [-CW2 CW2] [-PW1 PW1]
+                           [-PW2 PW2]
                            nsimul initializer VPH target
 
 ANALYZE the RSS images
 
 positional arguments:
-  nsimul                Number of simulations
-  initializer           Initializer of simulations
-  VPH                   VPH used during the observations
-  target                Name of the target
+  nsimul       Number of simulations
+  initializer  Initializer of simulations
+  VPH          VPH used during the observations
+  target       Name of the target
 
 optional arguments:
-  -h, --help            show this help message and exit
-  --nameEL NAMEEL       Name of the emission line
-  --analyze             Analyze the corresponding line
-  --plots               Create and save the figures
-  -f FITTING FUNCTION (0,1,2), --method FITTING FUNCTION (0,1,2)
-                        Fitting function (0=gauss_hermite, 1=gauss,
-                        2=double_gauss)
-  -S MINIMUM S/N, --limsnr MINIMUM S/N
-                        Mininum Signal-to-noise ratio in each spaxel
-  -w LINE CENTRAL WAVELENGTH, --ctwl LINE CENTRAL WAVELENGTH
-                        Central rest-frame wavelength for line (AA)
-  -z REDSHIFT, --redshift REDSHIFT
-                        Redshift for target and catalog lines                       
-  -LW1 LOWER WAVELENGTH - LINE, --lcut1 LOWER WAVELENGTH - LINE
-                        Lower rest-frame wavelength for line (AA)
-  -LW2 UPPER WAVELENGTH - LINE, --lcut2 UPPER WAVELENGTH - LINE
-                        Upper rest-frame wavelength for line (AA)
-  -CW1 LOWER WAVELENGTH - CONT, --ccut1 LOWER WAVELENGTH - CONT
-                        Lower rest-frame wavelength for cont. (AA)
-  -CW2 UPPER WAVELENGTH - CONT, --ccut2 UPPER WAVELENGTH - CONT
-                        Upper rest-frame wavelength for cont. (AA)
-  -PW1 LOWER WAVELENGTH - PLOT, --pcut1 LOWER WAVELENGTH - PLOT
-                        Lower (observed) wavelength for plot (AA)
-  -PW2 UPPER WAVELENGTH - PLOT, --pcut2 UPPER WAVELENGTH - PLOT
-                        Upper (observed) wavelength for plot (AA)
+  -h, --help   show this help message and exit
+  -LINE LINE   Name of the emission line
+  --analyze    Analyze the corresponding line
+  --plots      Create and save the figures
+  -f {0,1,2}   Fitting function (0=gauss_hermite, 1=gauss, 2=double_gauss)
+  -S S         Mininum Signal-to-noise ratio in each spaxel
+  -w W         Central rest-frame wavelength of the emission line (AA)
+  -z Z         Redshift of the target
+  -LW1 LW1     Lower rest-frame wavelength (AA) for the emission-line fitting
+  -LW2 LW2     Upper rest-frame wavelength (AA) for the emission-line fitting
+  -CW1 CW1     Lower rest-frame wavelength (AA) for the continuum fitting
+  -CW2 CW2     Upper rest-frame wavelength (AA) for the continuum fitting
+  -PW1 PW1     Lower (observed) wavelength (AA) for the plot
+  -PW2 PW2     Upper (observed) wavelength (AA) for the plot
 
 ```
 The following command shows an example of the Hα emission-line analysis (100 simulated images, LRR VPH):
 
 ```bash
-$ python 2_lines_analysis.py 100 0 LRR target_name --nameEL Halpha --analyze 
--f 0 -S 5 -w 6563 -z 0.003465 -LW1 6553 -LW2 6573 -CW1 6495 -CW2 6540 -PW1 6500 -PW2 6650
+$ python 2_lines_analysis.py 100 0 LRR target_name -LINE Halpha  --analyze 
+-f 0 -S 10 -w 6563 -z 0.003465 -LW1 6553 -LW2 6573 -CW1 6495 -CW2 6540 -PW1 6500 -PW2 6650
 ```
 The parameter _'plots'_ allows the user to create and save the maps of the emission-line properties (S/N, Flux, EW, velocity, velocity dispersion). The scale of each figure will be setted in the terminal during the first iteration of the simulated images. Warning: to avoid the generation of multiple (and maybe unnecessary) images, the number of simulations can be reduced to 2-5 in this step.
 
 ```bash
-$  python 2_lines_analysis.py 5 0 LRR galaxy_name --nameEL Halpha --plots
+$  python 2_lines_analysis.py 5 0 LRR galaxy_name -LINE Halpha --plots
 ```
 
 - - - - - - - - - - - - -
