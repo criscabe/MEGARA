@@ -118,7 +118,9 @@ $ python 2_lines_analysis.py 100 0 LRR target_name -LINE Halpha  --analyze
 ```
 The parameter _'plots'_ allows the user to create and save the maps of the emission-line properties (S/N, Flux, EW, velocity, velocity dispersion). The scale of each figure will be setted in the terminal during the first iteration of the simulated images. 
 
-* Warning: to avoid the generation of multiple (and maybe unnecessary) images in this step, we recommend to reduce the number of simulations to 2-5.
+```diff
+- Warning: to avoid the generation of multiple (and maybe unnecessary) images in this step, we recommend to reduce the number of simulations to 2-5.
+```
 
 ```bash
 $ python 2_lines_analysis.py 5 0 LRR target_name -LINE Halpha --plots
