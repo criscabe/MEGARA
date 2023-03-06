@@ -130,8 +130,8 @@ $ python 2_lines_analysis.py 5 0 LRR target_name -LINE Halpha --plots
 
 The help function will provide information about the required and optional arguments:
 ```console
-criscabe:~/MEGARA/ $ python 3_uncertainties.py -h                                 u
-sage: 3_uncertainties.py [-h] [-LINE LINE] [--median] [--residuals]
+criscabe:~/MEGARA/ $ python 3_uncertainties.py -h                                 
+usage: 3_uncertainties.py [-h] [-LINE LINE] [--median] [--residuals]
                           [--uncertainties] [--plots]
                           target
 
@@ -148,3 +148,12 @@ optional arguments:
   --uncertainties  Compute the random uncertainties
   --plots          Create and save the figures
 ```
+
+To run this script, the user must indicate the name of the target and the emission line of interest. 
+Then, it offers three options: compute the median values of the simulations, the residuals, or the uncertainties.
+
+As an example, the following command will both compute the random uncertainties of several parameters dervied from the Hα emission line and save the 2D maps:
+```bash
+$ python 3_uncertainties.py target_name -LINE Halpha --uncertainties --plots
+```
+
