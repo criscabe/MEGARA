@@ -61,16 +61,19 @@ optional arguments:
 The following command will run all the steps of MEGARA DRP performing 100 simulations on data taken with the LRR VPH:
   
 ```bash
-$ python 1_simulations_reduction.py 100 0 LRR galaxy_name ob1 --all
+$ python 1_simulations_reduction.py 100 0 LRR target_name ob1 --all
 ```
 
-In case we are interested in running a particular step of MEGARA DRP (e.g., step 3: wavelength calibration), we can specify it as:
+The user must replace _'target_name'_ for the name of the target, and _'ob1'_ for the observing block ID that is being reduced in the MEGARA DRP step 8. 
+
+In case the user is interested in running a particular step of MEGARA DRP (e.g., step 3: wavelength calibration), it should be specified as:
 ```bash
-$ python 1_simulations_reduction.py 100 0 LRR galaxy_name ob1 --stage3
+$ python 1_simulations_reduction.py 100 0 LRR target_name ob1 --stage3
 ```
 - - - - - - - - - - - - -
 
 **[2_lines_analysis.py](https://github.com/criscabe/MEGARA/blob/main/code/2_lines_analysis.py)**: This file software has been employed to analyze simulated reduced MEGARA data (RSS images) and generate the maps with the emission-line properties.
+
 The help function will provide information about the required and optional arguments:
 ```bash
 $ python 2_lines_analysis.py -h                               
@@ -123,9 +126,9 @@ optional arguments:
 The following command shows an example of the Hα emission-line analysis (100 simulated images, LRR VPH):
 
 ```bash
-$ python 2_lines_analysis.py 100 0 LRR galaxy_name --nameEL Halpha --analyze -f 0 -S 5 -w 6563 -z 0.1 -LW1 6553 -LW2 6573 -CW1 6495 -CW2 6540 -PW1 6500 -PW2 6650
+$ python 2_lines_analysis.py 100 0 LRR target_name --nameEL Halpha --analyze -f 0 -S 5 -w 6563 -z 0.003465 -LW1 6553 -LW2 6573 -CW1 6495 -CW2 6540 -PW1 6500 -PW2 6650
 ```
-The parameter _'plots'_ allows the user to create and save the figures.
+The parameter _'plots'_ allows the user to create and save the maps of the emission-line properties (S/N, Flux, EW, velocity, velocity dispersion).
 
 ```bash
 $  python 2_lines_analysis.py 100 0 LRR galaxy_name --nameEL Halpha --plots
