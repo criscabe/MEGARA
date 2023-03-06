@@ -126,17 +126,25 @@ $ python 2_lines_analysis.py 5 0 LRR target_name -LINE Halpha --plots
 
 - - - - - - - - - - - - -
 
-**[3_residuals.py](https://github.com/criscabe/MEGARA/blob/main/code/3_residuals.py)**: This file software has been employed to compute both the median value of different parameters derived from the simulated MEGARA data, and the residuals (real data - median of the simulations).
+**[3_uncertainties.py]([https://github.com/criscabe/MEGARA/blob/main/code/3_residuals.py](https://github.com/criscabe/MEGARA/blob/main/code/3_uncertainties.py))**: This file software has been employed to compute the median of the simulations, the residuals (real data - median of the simulations), and the random uncertainties of different parameters derived from the MEGARA data.
 
-In this case, the user should just specify the emission line of interest (e.g., [OIII]5007):
-```bash
-$ python 3_residuals.py --OIII5007 
-```
-- - - - - - - - - - - - -
+The help function will provide information about the required and optional arguments:
+```console
+criscabe:~/MEGARA/ $ python 3_uncertainties.py -h                                 u
+sage: 3_uncertainties.py [-h] [-LINE LINE] [--median] [--residuals]
+                          [--uncertainties] [--plots]
+                          target
 
-**[4_uncertainties.py](https://github.com/criscabe/MEGARA/blob/main/code/4_uncertainties.py)**: This file software has been employed to compute the uncertainties of different parameters derived from the simulated MEGARA data.
+Compute the median, residuals, and uncertainties of different parameters
 
-In this case, the user should just specify the emission line of interest (e.g., [OIII]5007):
-```bash
-$ python 4_uncertainties.py --OIII5007 
+positional arguments:
+  target           Name of the target
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -LINE LINE       Name of the emission line
+  --median         Compute the median values of the simulations
+  --residuals      Compute the residuals (real values - median of simulations)
+  --uncertainties  Compute the random uncertainties
+  --plots          Create and save the figures
 ```
