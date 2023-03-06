@@ -126,7 +126,8 @@ optional arguments:
 The following command shows an example of the Hα emission-line analysis (100 simulated images, LRR VPH):
 
 ```bash
-$ python 2_lines_analysis.py 100 0 LRR target_name --nameEL Halpha --analyze -f 0 -S 5 -w 6563 -z 0.003465 -LW1 6553 -LW2 6573 -CW1 6495 -CW2 6540 -PW1 6500 -PW2 6650
+$ python 2_lines_analysis.py 100 0 LRR target_name --nameEL Halpha --analyze 
+-f 0 -S 5 -w 6563 -z 0.003465 -LW1 6553 -LW2 6573 -CW1 6495 -CW2 6540 -PW1 6500 -PW2 6650
 ```
 The parameter _'plots'_ allows the user to create and save the maps of the emission-line properties (S/N, Flux, EW, velocity, velocity dispersion). The scale of each figure will be setted in the terminal during the first iteration of the simulated images. Warning: to avoid the generation of multiple (and maybe unnecessary) images, the number of simulations can be reduced to 2-5 in this step.
 
