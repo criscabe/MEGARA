@@ -75,7 +75,7 @@ $ python 1_simulations_reduction.py 100 0 LRR target_name ob1 --stage3
 **[2_lines_analysis.py](https://github.com/criscabe/MEGARA/blob/main/code/2_lines_analysis.py)**: This file software has been employed to analyze simulated reduced MEGARA data (RSS images) and generate the maps with the emission-line properties.
 
 The help function will provide information about the required and optional arguments:
-```bash
+```console
 $ python 2_lines_analysis.py -h
 usage: 2_lines_analysis.py [-h] [-LINE LINE] [--analyze] [--plots]
                            [-f {0,1,2}] [-S S] [-w W] [-z Z] [-LW1 LW1]
