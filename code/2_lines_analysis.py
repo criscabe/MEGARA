@@ -43,6 +43,9 @@ if __name__ == "__main__":
     ##
     parser.add_argument('-f', '--method', default=0, choices=[0,1,2], metavar='FITTING FUNCTION (0,1,2)', help='Fitting function (0=gauss_hermite, 1=gauss, 2=double_gauss)', type=int)
     parser.add_argument('-S', '--limsnr', default=5, metavar='MINIMUM S/N', help='Mininum Signal-to-noise ratio in each spaxel', type=float)
+    parser.add_argument('-w', '--ctwl', metavar='LINE CENTRAL WAVELENGTH', help='Central rest-frame wavelength for line (AA)',
+                        type=float)
+    parser.add_argument('-z', '--redshift', metavar='REDSHIFT', help='Redshift for target and catalog lines', type=float)
     parser.add_argument('-LW1', '--lcut1', metavar='LOWER WAVELENGTH - LINE', help='Lower rest-frame wavelength for line (AA)',
                         type=float)
     parser.add_argument('-LW2', '--lcut2', metavar='UPPER WAVELENGTH - LINE', help='Upper rest-frame wavelength for line (AA)',
@@ -55,9 +58,7 @@ if __name__ == "__main__":
                         type=float)
     parser.add_argument('-PW2', '--pcut2', metavar='UPPER WAVELENGTH - PLOT', help='Upper (observed) wavelength for plot (AA)',
                         type=float)
-    parser.add_argument('-w', '--ctwl', metavar='LINE CENTRAL WAVELENGTH', help='Central rest-frame wavelength for line (AA)',
-                        type=float)
-    parser.add_argument('-z', '--redshift', metavar='REDSHIFT', help='Redshift for target and catalog lines', type=float)
+
     args = parser.parse_args()
     
     #####################################
