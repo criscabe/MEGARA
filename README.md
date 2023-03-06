@@ -131,6 +131,7 @@ The parameter _'plots'_ allows the user to create and save the figures.
 $  python 2_lines_analysis.py 100 0 LRR galaxy_name --nameEL Halpha --plots
 ```
 
+- - - - - - - - - - - - -
 
 **[3_residuals.py](https://github.com/criscabe/MEGARA/blob/main/code/3_residuals.py)**: This file software has been employed to compute both the median value of different parameters derived from the simulated MEGARA data, and the residuals (real data - median of the simulations).
 
@@ -138,6 +139,7 @@ In this case, the user should just specify the emission line of interest (e.g., 
 ```bash
 $ python 3_residuals.py --OIII5007 
 ```
+- - - - - - - - - - - - -
 
 **[4_uncertainties.py](https://github.com/criscabe/MEGARA/blob/main/code/4_uncertainties.py)**: This file software has been employed to compute the uncertainties of different parameters derived from the simulated MEGARA data.
 
