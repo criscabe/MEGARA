@@ -106,6 +106,10 @@ optional arguments:
                         2=double_gauss)
   -S MINIMUM S/N, --limsnr MINIMUM S/N
                         Mininum Signal-to-noise ratio in each spaxel
+  -w LINE CENTRAL WAVELENGTH, --ctwl LINE CENTRAL WAVELENGTH
+                        Central rest-frame wavelength for line (AA)
+  -z REDSHIFT, --redshift REDSHIFT
+                        Redshift for target and catalog lines                       
   -LW1 LOWER WAVELENGTH - LINE, --lcut1 LOWER WAVELENGTH - LINE
                         Lower rest-frame wavelength for line (AA)
   -LW2 UPPER WAVELENGTH - LINE, --lcut2 UPPER WAVELENGTH - LINE
@@ -118,10 +122,7 @@ optional arguments:
                         Lower (observed) wavelength for plot (AA)
   -PW2 UPPER WAVELENGTH - PLOT, --pcut2 UPPER WAVELENGTH - PLOT
                         Upper (observed) wavelength for plot (AA)
-  -w LINE CENTRAL WAVELENGTH, --ctwl LINE CENTRAL WAVELENGTH
-                        Central rest-frame wavelength for line (AA)
-  -z REDSHIFT, --redshift REDSHIFT
-                        Redshift for target and catalog lines
+
 ```
 The following command shows an example of the Hα emission-line analysis (100 simulated images, LRR VPH):
 
